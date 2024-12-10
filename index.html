@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <meta charset="utf-8">  
+    <title>To-Do</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Iconscout Link For Icons -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  </head>
+
+
+  <body>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+
+
+
+
+
+    <input type="checkbox" id="active1">
+    <label for="active1" class="menu-btn"><span></span></label>
+    <label for="active1" class="close"></label>
+    <div class="wrapper3">
+      <ul>
+        <li><a id="lightID" class="light">Nature</a></li>
+        <li><a id="scarletID" class="scarlet">Scarlet</a></li>
+        <li><a id="azureID" class="azure">Water</a></li>
+        <li><a id="charcoalID" class="charcoal">Cave</a></li>
+        <li><a id="obsidianID" class="obsidian">Deep</a></li>
+        
+      </ul>
+    </div>
+    <script>
+      var btn1 = document.getElementById("lightID");
+      var btn1 = document.getElementById("lightID");
+      btn1.onclick = function(){
+        document.body.classList.toggle("nature-theme");
+        document.body.classList.remove("scarlet-theme");
+        document.body.classList.remove("cave-theme");
+        document.body.classList.remove("obsidian-theme");
+        document.body.classList.remove("water-theme");
+      }
+
+      var btn2 = document.getElementById("scarletID");
+      btn2.onclick = function(){
+        document.body.classList.toggle("scarlet-theme");
+        document.body.classList.remove("nature-theme");
+        document.body.classList.remove("cave-theme");
+        document.body.classList.remove("obsidian-theme");
+        document.body.classList.remove("water-theme");
+      }
+
+      var btn5 = document.getElementById("charcoalID");
+      btn5.onclick = function(){
+        document.body.classList.toggle("cave-theme");
+        document.body.classList.remove("nature-theme");
+        document.body.classList.remove("scarlet-theme");
+        document.body.classList.remove("water-theme");
+        document.body.classList.remove("obsidian-theme");
+      }
+
+      var btn4 = document.getElementById("obsidianID");
+      btn4.onclick = function(){
+        document.body.classList.toggle("obsidian-theme");
+        document.body.classList.remove("nature-theme");
+        document.body.classList.remove("water-theme");
+        document.body.classList.remove("scarlet-theme");
+        document.body.classList.remove("cave-theme");
+      }
+      var btn3 = document.getElementById("azureID");
+      btn3.onclick = function(){
+        document.body.classList.toggle("water-theme");
+        document.body.classList.remove("nature-theme");
+        document.body.classList.remove("obsidian-theme");
+        document.body.classList.remove("scarlet-theme");
+        document.body.classList.remove("cave-theme");
+      }
+    </script>
+
+
+
+
+
+    <div class="wrapper1">
+    <div class="time">
+      <span class="hour" id="hourID">00</span>
+      <span class="colon">:</span>
+      <span class="minute" id="minuteID">00</span>
+      <span class="colon">:</span>
+      <span class="second" id="secondID">00</span>
+      <span class="colon ms-colon">:</span>
+      <span class="millisecond" id="millisecondID">00</span>
+    </div>
+    <div class="buttons">
+      <button class="start">></button>
+      <button class="stop">ll</button>
+      <button class="reset">O</button>
+    </div>
+      
+      <script>
+      document.getElementById("millisecondID").innerHTML = localStorage.getItem("milliseconds");
+      document.getElementById("secondID").innerHTML = localStorage.getItem("seconds");
+      document.getElementById("minuteID").innerHTML = localStorage.getItem("minutes");
+      document.getElementById("hourID").innerHTML = localStorage.getItem("hours");
+
+      /*let hr = min = sec = ms = "0" + 0,*/
+      let hr = localStorage.getItem("hours"),
+        min = localStorage.getItem("minutes"),
+        sec = localStorage.getItem("seconds"),
+        ms = localStorage.getItem("milliseconds"),
+        startTimer;
+
+      const startBtn = document.querySelector(".start"),
+       stopBtn = document.querySelector(".stop"),
+       resetBtn = document.querySelector(".reset");
+
+       startBtn.addEventListener("click", start);
+       stopBtn.addEventListener("click", stop);
+       resetBtn.addEventListener("click", reset);
+
+      function start() {
+        localStorage.setItem("milliseconds", ms);
+        localStorage.setItem("seconds", sec);
+        localStorage.setItem("minutes", min);
+        localStorage.setItem("hours", hr);
+
+        startBtn.classList.add("active");
+        stopBtn.classList.remove("stopActive");
+
+        startTimer = setInterval(()=>{
+          ms++
+          ms = ms < 10 ? "0" + ms : ms;
+
+          if(ms == 100){
+            sec++;
+            sec = sec < 10 ? "0" + sec : sec;
+            ms = "0" + 0;
+          }
+          if(sec == 60){
+            min++;
+            min = min < 10 ? "0" + min : min;
+            sec = "0" + 0;
+          }
+          if(min == 60){
+            hr++;
+            hr = hr < 10 ? "0" + hr : hr;
+            min = "0" + 0;
+          }
+
+          putValue();
+        },10); //1000ms = 1s
+
+      }
+
+      function stop() {
+        startBtn.classList.remove("active");
+        stopBtn.classList.add("stopActive");
+        clearInterval(startTimer);
+
+        localStorage.setItem("milliseconds", ms);
+        localStorage.setItem("seconds", sec);
+        localStorage.setItem("minutes", min);
+        localStorage.setItem("hours", hr);
+
+      }
+      function reset() {
+        localStorage.setItem("milliseconds", "00");
+        localStorage.setItem("seconds", "00");
+        localStorage.setItem("minutes", "00");
+        localStorage.setItem("hours", "00");
+
+        startBtn.classList.remove("active");
+        stopBtn.classList.remove("stopActive");
+        clearInterval(startTimer);
+        hr = min = sec = ms = "0" + 0;
+        putValue();
+      }
+
+      function putValue() {
+        document.querySelector(".millisecond").innerText = ms;
+        document.querySelector(".second").innerText = sec;
+        document.querySelector(".minute").innerText = min;
+        document.querySelector(".hour").innerText = hr;
+      }
+     </script>
+
+
+
+
+    <section class="main">
+      <div class="wrapper"> 
+        <div class="task-input">
+          <input type="text" placeholder="Add  Tasks">
+        </div>
+        <div class="controls">
+          <div class="filters">
+            <span class="active" id="all">All  Tasks</span>
+            <span id="pending">Pending</span>
+            <span id="completed">Completed</span>
+          </div>
+          <button class="clear-btn">Clear All</button>
+          
+        </div>
+        <ul class="task-box"></ul>
+     </section>
+
+    <script src="script.js"></script>
+
+
+    <p id="hiddenTxt" ></p>
+    <p id="hiddenTxt2"></p>
+  </body>
+</html>
