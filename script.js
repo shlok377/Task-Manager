@@ -132,7 +132,7 @@ var secondsContainer = document.querySelector('.clock_seconds')
 var tickElements = Array.from(document.querySelectorAll('.tick'))
 
 var last = new Date(0)
-last.setUTCHours(-1)
+last.setUTCHours(0)//////////////////////////////////////////////////////////////
 
 var tickState = true
 
