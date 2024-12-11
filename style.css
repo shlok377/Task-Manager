@@ -203,7 +203,8 @@ input::placeholder {
   font-size: 20px;
   border-radius: 0px;
   transition: all 250ms cubic-bezier(.47,1.64,.41,1.5);
-  box-shadow: 0px 2px var(--text);
+  color: var(--highlights);
+  box-shadow: 0px 1px var(--text);
 }
 
 .filters span:hover{
