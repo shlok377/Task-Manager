@@ -1,3 +1,60 @@
+Obsidian::
+
+bg: 22223B
+text: fca311
+task-menu: 38384e; hover: 4a4e69
+highlight: 576aff
+
+
+
+Nature:
+
+bg: 31572C
+text: ffd449
+task menu: 0d2818; hover: 058c42
+highlights: 16db65
+
+
+
+Cave:
+
+bg: 252422
+text: EB5E28
+task menu: 403D39; hover: 252422
+highlights: a3cef1
+
+
+
+Scarlet:
+
+bg: 370617
+text: 4ba3c3
+task menu: 691e06; hover: 8f250c
+highlights: FCBF49
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Import Google Font - Poppins */
 /*hewjj nbh*/
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -64,11 +121,12 @@
 
 
 
+
 body{
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background: var(--background);
+  background: var(--background);/*2f3640,4f428f*/
 }
 .main{
   width: 100%;
@@ -304,7 +362,7 @@ input::placeholder {
   padding-top: 11px;
   cursor: pointer;
   align-items: flex-start;
-  transition: all 450ms cubic-bezier(.47,1.64,.41,1.5); 
+  transition: all 250ms cubic-bezier(.47,1.64,.41,1.5); 
   background: rgba(0, 0, 0, 0.1);          
   /*border-bottom: 1px solid rgba(0, 0, 0, 0.5);*/
 }
@@ -390,7 +448,7 @@ input::placeholder {
   border-radius: 14px;
   transform: scale(0);
   transform-origin: top right;
-  transition: all 700ms cubic-bezier(.47,1.64,.41,1.5);
+  transition: all 500ms cubic-bezier(.47,1.64,.41,1.2);
 }
 .task-box .task:last-child .task-menu{
   bottom: 0;
@@ -485,6 +543,10 @@ body{
   padding: 0 0px;
   transition:  all 300ms cubic-bezier(.47,1.64,.41,1.2);
 }
+.wrapper1 .time:hover{
+  height: 65px;
+  transition:  all 300ms cubic-bezier(.47,1.64,.41,1.2);
+}
 
 .wrapper1 .time span{
   width: 100px;
@@ -503,10 +565,8 @@ body{
 .wrapper1 .buttons{
   text-align: center;
   margin-top: 0px;
-  user-select: none;
 }
 .buttons button{
-  user-select: none;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 16px;
@@ -521,7 +581,7 @@ body{
   color: rgb(255,255,255,0.7);
   border-radius: 17px;
   letter-spacing: 0.3px;
-  transition:  all 400ms cubic-bezier(.47,1.64,.41,1.2);
+  transition:  all 300ms cubic-bezier(.47,1.64,.41,1.2);
   box-shadow: 0px 2px rgba(255,255,255,0.1);
 }
 
@@ -536,8 +596,8 @@ body{
   font-size: 18px;/*25*/
   margin: 5px 15px;
   letter-spacing: 5px;
-  transition:  all 400ms cubic-bezier(.47,1.64,.41,1.2);
-  box-shadow: 0px 2px var(--highlights);
+  transition:  all 300ms cubic-bezier(.47,1.64,.41,1.2);
+  box-shadow: 0px 2px rgba(255,255,255,0.4);
 }
 
 .buttons button.active,
@@ -548,9 +608,9 @@ body{
   font-size: 25px;
   margin: 5px 55px;
   letter-spacing: 2px;
-  color: var(--text);
-  transition:  all 400ms cubic-bezier(.47,1.64,.41,1.2);
-  box-shadow: 0px 3px var(--highlights);
+  color: rgb(225,255,225,1);
+  transition:  all 300ms cubic-bezier(.47,1.64,.41,1.2);
+  box-shadow: 0px 3px var(--text);
 }
 
 
@@ -567,15 +627,15 @@ body{
   position: absolute;
   z-index: 997;
   border-radius: 17px;
-  top: 10px;
-  left: -230px;
+  top: -200px;
+  left: -200px;
   height: 290px;
   width: 220px;
   /*right: 30hv;*/
-  /*box-shadow: 0px 0px 20px rgba(0,0,0,0.7);*/
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.7);
   background: var(--task-menu);
-  transition: all 600ms cubic-bezier(.47,1.64,.41,0.8);
-  transform: scale(1);
+  transition: all 700ms cubic-bezier(.47,1.64,.41,0.8);
+  transform: scale(0);
 }
 #active1:checked ~ .wrapper3{
   /*left: 0;*/
@@ -589,7 +649,7 @@ body{
 
 .menu-btn{
   position: absolute;
-  z-index: 1003;
+  z-index: 1002;
   left: 20px;
   /*left: 20px; */
   top: 15px;
@@ -597,26 +657,26 @@ body{
   width: 50px;
   text-align: center;
   line-height: 50px;
-  border-radius: 50%; /* <-----------  */
+  border-radius: 50%;
   font-size: 20px;
   cursor: pointer;
   color: red;
-  transition: all 1000ms cubic-bezier(.47,1.64,.41,1.2);
+  transition: all 700ms cubic-bezier(.47,1.64,.41,1.2);
 }
 .menu-btn span,
 .menu-btn:before,
 .menu-btn:after{
   content: "";
   position: absolute;
-  /*top: calc(50% - 1px);*/
-  top: 20px;
+  top: calc(50% - 1px);
   right: 30%;
   left: 22px;
   width: 40%;
   border-bottom: 3px solid var(--text);
-  transition: all 1500ms cubic-bezier(.47,1.64,.41,1.2);
+  transition: all 500ms cubic-bezier(.47,1.64,.41,1.2);
 }
 .menu-btn:hover{
+  top: 0;
   left: 10px;
   line-height: 70px;
   height: 80px;
@@ -630,7 +690,7 @@ body{
 }
 
 .close {
-  z-index: 1003;
+  z-index: 1001;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -641,36 +701,13 @@ body{
 #active1:checked + .menu-btn span {
   transform: scaleX(0);
 }
-#active1:checked + .menu-btn{
-
-  /*transform: rotate(45deg);*/
-  border-color: var(--highlights);
-  left: 170px;
-  top: 15px;
-  z-index: 1003;
-}
-#active1:checked + .menu-btn{
-
-  /*transform: rotate(-45deg);*/
-  border-color: var(--highlights);
-  left: 170px;
-  top: 15px;
-  z-index: 1003;
-}
-
 #active1:checked + .menu-btn:before {
   transform: rotate(45deg);
   border-color: var(--highlights);
-  /*left: 170px;
-  top: 15px;
-  z-index: 1003;*/
 }
 #active1:checked + .menu-btn:after {
   transform: rotate(-45deg);
   border-color: var(--highlights);
-  /*left: 170px;
-  top: 15px;
-  z-index: 1003;*/
 }
 .wrapper3 ul{
   position: absolute;
@@ -724,10 +761,10 @@ body{
   color: red;
 }
 .wrapper3 .charcoal:hover{
-  color: yellow;
+  color: black;
 }
 .wrapper3 .obsidian:hover{
-  color: orange;
+  color: darkblue;
 }
 
 

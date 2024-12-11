@@ -8,12 +8,116 @@
     <title>To-Do</title>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Iconscout Link For Icons -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <style>
+      .scale-divs-container {
+        z-index: -10;
+        position: absolute;
+        width: 0px;  /* Width of the container */
+        height: 0px;  /* Height of the container */
+        /*margin-top: 30px;*/
+      }
+
+      .scale-div {
+        z-index: -10;
+        position: absolute;  /* Position absolutely within the container */
+        width: 200vw;
+        height: 200vw;
+        background-color: rgb(255, 255, 255, 0.2);
+        transition:  all 3s ease;
+        transform: scale(0);  /* Start with scale 0 */
+        transform-origin: top right;  /* Ensures scaling starts from the top-left corner */
+        top: 0;
+        left: 0;
+      }
+
+      /* Colors for each theme */
+      .nature-theme .scale-div:nth-child(1) { background-color: #304530; }
+      .scarlet-theme .scale-div:nth-child(2) { background-color: #370617; }
+      .water-theme .scale-div:nth-child(3) { background-color: #325db3; }
+      .cave-theme .scale-div:nth-child(4) { background-color: #252422; }
+      .obsidian-theme .scale-div:nth-child(5) { background-color: #22223B; }
+
+      /* Active scaling for the selected div */
+      .scale-div.active {
+        transform: scale(1.5);  /* Scale the selected div up */
+      }
+
+    </style>
   </head>
 
-
   <body>
+    <input type="checkbox" id="active1">
+    <label for="active1" class="menu-btn"><span></span></label>
+    <label for="active1" class="close"></label>
+    <div class="wrapper3">
+      <ul>
+        <li><a id="lightID" class="light">Nature</a></li>
+        <li><a id="charcoalID" class="charcoal">Cave</a></li>
+        <li><a id="scarletID" class="scarlet">Scarlet</a></li>
+        <li><a id="azureID" class="azure">Water</a></li>
+        <li><a id="obsidianID" class="obsidian">Deep</a></li>
+      </ul>
+    </div>
+
+    <div class="scale-divs-container">
+      <div class="scale-div"></div>
+      <div class="scale-div"></div>
+      <div class="scale-div"></div>
+      <div class="scale-div"></div>
+      <div class="scale-div"></div>
+    </div>
+
+    <script>
+
+      changeTheme("nature-theme", 1);
+
+      var btn1 = document.getElementById("lightID");
+      btn1.onclick = function() {
+        changeTheme("nature-theme", 1);
+      }
+
+      var btn2 = document.getElementById("scarletID");
+      btn2.onclick = function() {
+        changeTheme("scarlet-theme", 2);
+      }
+
+      var btn5 = document.getElementById("charcoalID");
+      btn5.onclick = function() {
+        changeTheme("cave-theme", 4);
+      }
+
+      var btn4 = document.getElementById("obsidianID");
+      btn4.onclick = function() {
+        changeTheme("obsidian-theme", 5);
+      }
+
+      var btn3 = document.getElementById("azureID");
+      btn3.onclick = function() {
+        changeTheme("water-theme", 3);
+      }
+
+      // Function to change theme and scale the divs
+      function changeTheme(theme, divIndex) {
+        document.body.classList.remove("nature-theme", "scarlet-theme", "cave-theme", "obsidian-theme", "water-theme");
+        document.body.classList.add(theme);
+
+        // Reset all divs to scale(0)
+        var divs = document.querySelectorAll(".scale-div");
+        divs.forEach(function(div) {
+          div.classList.remove("active");
+        });
+
+        // Scale up the selected div
+        divs[divIndex - 1].classList.add("active");
+      }
+    </script>
+
+
+
+
+
+
     <div class="clock_clock">
       <div class="clock_hours">
         <div class="clock_first">
@@ -49,65 +153,8 @@
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <input type="checkbox" id="active1">
-    <label for="active1" class="menu-btn"><span></span></label>
-    <label for="active1" class="close"></label>
-    <div class="wrapper3">
-      <ul>
-        <li><a id="lightID" class="light">Nature</a></li>
-        <li><a id="scarletID" class="scarlet">Scarlet</a></li>
-        <li><a id="azureID" class="azure">Water</a></li>
-        <li><a id="charcoalID" class="charcoal">Cave</a></li>
-        <li><a id="obsidianID" class="obsidian">Deep</a></li>
-        
-      </ul>
-    </div>
-    <script>
-      var btn1 = document.getElementById("lightID");
-      var btn1 = document.getElementById("lightID");
-      btn1.onclick = function(){
-        document.body.classList.toggle("nature-theme");
-        document.body.classList.remove("scarlet-theme");
-        document.body.classList.remove("cave-theme");
-        document.body.classList.remove("obsidian-theme");
-        document.body.classList.remove("water-theme");
-      }
 
-      var btn2 = document.getElementById("scarletID");
-      btn2.onclick = function(){
-        document.body.classList.toggle("scarlet-theme");
-        document.body.classList.remove("nature-theme");
-        document.body.classList.remove("cave-theme");
-        document.body.classList.remove("obsidian-theme");
-        document.body.classList.remove("water-theme");
-      }
 
-      var btn5 = document.getElementById("charcoalID");
-      btn5.onclick = function(){
-        document.body.classList.toggle("cave-theme");
-        document.body.classList.remove("nature-theme");
-        document.body.classList.remove("scarlet-theme");
-        document.body.classList.remove("water-theme");
-        document.body.classList.remove("obsidian-theme");
-      }
-
-      var btn4 = document.getElementById("obsidianID");
-      btn4.onclick = function(){
-        document.body.classList.toggle("obsidian-theme");
-        document.body.classList.remove("nature-theme");
-        document.body.classList.remove("water-theme");
-        document.body.classList.remove("scarlet-theme");
-        document.body.classList.remove("cave-theme");
-      }
-      var btn3 = document.getElementById("azureID");
-      btn3.onclick = function(){
-        document.body.classList.toggle("water-theme");
-        document.body.classList.remove("nature-theme");
-        document.body.classList.remove("obsidian-theme");
-        document.body.classList.remove("scarlet-theme");
-        document.body.classList.remove("cave-theme");
-      }
-    </script>
 
 
 
@@ -244,3 +291,17 @@
     <p id="hiddenTxt2"></p>
   </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+-
