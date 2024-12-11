@@ -71,6 +71,11 @@ body{
   overflow: hidden;
   background: var(--background);/*2f3640,4f428f*/
 }
+.main{
+  width: 100%;
+  height: 100%;
+  justify-items: center;  
+}
 ::selection{
   transition: all 300ms cubic-bezier(.47,1.64,.41,1.2);
   color: #fff;
@@ -79,6 +84,7 @@ body{
 .wrapper{
   user-select: none;
   max-width: 705px;
+  width: 100%;
   transition: all 300ms cubic-bezier(.47,1.64,.41,1.2);
   padding: 8px 0 30px;
   margin: 5vh 3vh;
