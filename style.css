@@ -385,7 +385,7 @@ input::placeholder {
   right: -5px;
   bottom: -65px;
   padding: 5px 0;
-  box-shadow: 0 1px 15px rgba(0,0,0,0.7);
+  /*box-shadow: 0 1px 15px rgba(0,0,0,0.7);*/
   background: var(--task-menu);
   position: absolute;
   border-radius: 14px;
@@ -602,7 +602,7 @@ body{
   font-size: 20px;
   cursor: pointer;
   color: red;
-  transition: all 1000ms cubic-bezier(.47,1.64,.41,1.2);
+  transition: all 1000ms cubic-bezier(.47,1.64,.41,1);
 }
 .menu-btn span,
 .menu-btn:before,
