@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/thinline.css">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 
     <style>
@@ -52,11 +51,11 @@
   <body onbeforeunload="return refreshing()">
 
     <script>
-    function refreshing() {
+    function refreshing() {/*
       localStorage.setItem("milliseconds", ms);
       localStorage.setItem("seconds", sec);
       localStorage.setItem("minutes", min);
-      localStorage.setItem("hours", hr);
+      localStorage.setItem("hours", hr);*/
     }
     </script>
 
@@ -190,107 +189,78 @@
 
 
     <div class="wrapper1">
-    <div class="time">
-      <span class="hour" id="hourID">00</span>
-      <span class="colon">:</span>
-      <span class="minute" id="minuteID">00</span>
-      <span class="colon">:</span>
-      <span class="second" id="secondID">00</span>
-      <span class="colon ms-colon">:</span>
-      <span class="millisecond" id="millisecondID">00</span>
-    </div>
-    <div class="buttons">
-      <button class="start"><i class="uil uil-play"></i></button>
-      <button class="stop">||</i></button>
-      <button class="reset"><i class="uil uil-redo"></i></button>
+      <div class="time">
+        <h3 id="displayTimeID">00 : 00 : 00</h3>
+        <!--<span class="hour" id="hourID">00</span> 
+        <span class="colon">:</span>
+        <span class="minute" id="minuteID">00</span>
+        <span class="colon">:</span>
+        <span class="second" id="secondID">00</span>
+        <span class="colon ms-colon">:</span>
+        <span class="millisecond" id="millisecondID">00</span>-->
+      </div>
+      <div class="buttons">
+        <button id="start_btn" class="start" onclick="watchstart()"><i class="uil uil-play"></i></button>
+        <button id="" onclick="watchStop()" class="stop"><i class="uil uil-square-shape"></i></button>
+        <button id="" onclick="watchReset()" class="reset"><i class="uil uil-redo"></i></button>
+      </div>
     </div>
       
-      <script>
-      document.getElementById("millisecondID").innerHTML = localStorage.getItem("milliseconds");
-      document.getElementById("secondID").innerHTML = localStorage.getItem("seconds");
-      document.getElementById("minuteID").innerHTML = localStorage.getItem("minutes");
-      document.getElementById("hourID").innerHTML = localStorage.getItem("hours");
+    <script>
 
-      /*let hr = min = sec = ms = "0" + 0,*/
-      let hr = localStorage.getItem("hours"),
-        min = localStorage.getItem("minutes"),
-        sec = localStorage.getItem("seconds"),
-        ms = localStorage.getItem("milliseconds"),
-        startTimer;
-
+      let [sw_seconds, sw_minutes, sw_hours] = [0,0,0];
+      let displayTime = document.getElementById("displayTimeID");
+      let sw_timer = null;
+      document.getElementById("displayTimeID").innerHTML = localStorage.getItem("study_time");
       const startBtn = document.querySelector(".start"),
-       stopBtn = document.querySelector(".stop"),
-       resetBtn = document.querySelector(".reset");
+        stopBtn = document.querySelector(".stop"),
+        resetBtn = document.querySelector(".reset");
 
-       startBtn.addEventListener("click", start);
-       stopBtn.addEventListener("click", stop);
-       resetBtn.addEventListener("click", reset);
 
-      function start() {
-        localStorage.setItem("milliseconds", ms);
-        localStorage.setItem("seconds", sec);
-        localStorage.setItem("minutes", min);
-        localStorage.setItem("hours", hr);
-
+      function stopwatch(){
         startBtn.classList.add("active");
         stopBtn.classList.remove("stopActive");
-
-        startTimer = setInterval(()=>{
-          ms++
-          ms = ms < 10 ? "0" + ms : ms;
-
-          if(ms == 100){
-            sec++;
-            sec = sec < 10 ? "0" + sec : sec;
-            ms = "0" + 0;
+        sw_seconds++;
+        if (sw_seconds == 60){
+          sw_seconds=0;
+          sw_minutes++;
+          if (sw_minutes==60){
+            sw_minutes=0;
+            sw_hours++;
           }
-          if(sec == 60){
-            min++;
-            min = min < 10 ? "0" + min : min;
-            sec = "0" + 0;
-          }
-          if(min == 60){
-            hr++;
-            hr = hr < 10 ? "0" + hr : hr;
-            min = "0" + 0;
-          }
+        }
 
-          putValue();
-        },10); //1000ms = 1s
+        let sw_h = sw_hours <10? "0" + sw_hours:sw_hours;
+        let sw_m = sw_minutes <10? "0" + sw_minutes:sw_minutes;
+        let sw_s = sw_seconds <10? "0" + sw_seconds:sw_seconds;
 
+        displayTime.innerHTML = sw_h+" : "+sw_m+" : "+sw_s;
       }
 
-      function stop() {
+      function watchstart(){
+        localStorage.setItem("study_time", displayTime.innerHTML);
+        if(sw_timer!= null){
+          startBtn.classList.add("active");
+          stopBtn.classList.remove("stopActive");
+          clearInterval(sw_timer);
+        }
+        sw_timer = setInterval(stopwatch,1000);
+      }
+      function watchStop() {
+        localStorage.setItem("study_time", displayTime.innerHTML);
         startBtn.classList.remove("active");
         stopBtn.classList.add("stopActive");
-        clearInterval(startTimer);
-
-        localStorage.setItem("milliseconds", ms);
-        localStorage.setItem("seconds", sec);
-        localStorage.setItem("minutes", min);
-        localStorage.setItem("hours", hr);
-
+        clearInterval(sw_timer);
       }
-      function reset() {
-        localStorage.setItem("milliseconds", "00");
-        localStorage.setItem("seconds", "00");
-        localStorage.setItem("minutes", "00");
-        localStorage.setItem("hours", "00");
-
+      function watchReset(){
+        localStorage.setItem("study_time", displayTime.innerHTML);
         startBtn.classList.remove("active");
         stopBtn.classList.remove("stopActive");
-        clearInterval(startTimer);
-        hr = min = sec = ms = "0" + 0;
-        putValue();
+        clearInterval(sw_timer); 
+        [sw_seconds, sw_minutes, sw_hours] = [0,0,0];
+        displayTime.innerHTML = "00 : 00: 00";
       }
-
-      function putValue() {
-        document.querySelector(".millisecond").innerText = ms;
-        document.querySelector(".second").innerText = sec;
-        document.querySelector(".minute").innerText = min;
-        document.querySelector(".hour").innerText = hr;
-      }
-     </script>
+    </script>
 
 
 
