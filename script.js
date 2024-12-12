@@ -23,13 +23,17 @@ function showTodo(filter) {
         todos.forEach((todo, id) => {
             let completed = todo.status == "completed" ? "checked" : "";
             if(filter == todo.status || filter == "all") {
+                localStorage.setItem("milliseconds", ms);
+                localStorage.setItem("seconds", sec);
+                localStorage.setItem("minutes", min);
+                localStorage.setItem("hours", hr);
                 liTag += `<li class="task">
                             <label for="${id}">
                                 <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
                                 <p class="${completed}">${todo.name}</p>
                             </label>
                             <div class="settings">
-                                <i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>
+                                <i onclick="showMenu(this)" class="uil uil-ellipsis-v"></i>
                                 <ul class="task-menu">
                                     <li onclick='editTask(${id}, "${todo.name}")'><i class="uil uil-pen"></i>Edit</li>
                                     <li onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</li>
@@ -72,6 +76,10 @@ function editTask(taskId, textName) {
     editId = taskId;
     isEditTask = true;
     taskInput.value = textName;
+    localStorage.setItem("milliseconds", ms);
+    localStorage.setItem("seconds", sec);
+    localStorage.setItem("minutes", min);
+    localStorage.setItem("hours", hr);
     taskInput.focus();
     taskInput.classList.add("active");
 }
@@ -84,8 +92,16 @@ function deleteTask(deleteId, filter) {
         todos.splice(deleteId, 1);
         localStorage.setItem("todo-list", JSON.stringify(todos));
         showTodo(filter);
+        localStorage.setItem("milliseconds", ms);
+        localStorage.setItem("seconds", sec);
+        localStorage.setItem("minutes", min);
+        localStorage.setItem("hours", hr);
     } else {
         txt = "";                                                   /*You pressed CANCEL!*/
+        localStorage.setItem("milliseconds", ms);
+        localStorage.setItem("seconds", sec);
+        localStorage.setItem("minutes", min);
+        localStorage.setItem("hours", hr);
     }
   document.getElementById("hiddenTxt").innerHTML = txt;
   
@@ -112,6 +128,10 @@ taskInput.addEventListener("keyup", e => {
             todos = !todos ? [] : todos;
             let taskInfo = {name: userTask, status: "pending"};
             todos.push(taskInfo);
+            localStorage.setItem("milliseconds", ms);
+            localStorage.setItem("seconds", sec);
+            localStorage.setItem("minutes", min);
+            localStorage.setItem("hours", hr);
         } else {
             isEditTask = false;
             todos[editId].name = userTask;
@@ -126,13 +146,16 @@ taskInput.addEventListener("keyup", e => {
 
 
 
+
+
+
 var hoursContainer = document.querySelector('.clock_hours')
 var minutesContainer = document.querySelector('.clock_minutes')
 var secondsContainer = document.querySelector('.clock_seconds')
 var tickElements = Array.from(document.querySelectorAll('.tick'))
 
 var last = new Date(0)
-last.setUTCHours(-1)//////////////////////////////////////////////////////////////
+last.setUTCHours(1)
 
 var tickState = true
 
@@ -202,6 +225,10 @@ function updateNumber (element, number) {
 
 setInterval(updateTime, 100)
 
+
+$(window).bind("beforeunload", function(){
+        return confirm("Do you really want to refresh?"); 
+});
 
 
 init();

@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/thinline.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+
     <style>
       .scale-divs-container {
         z-index: -10;
@@ -46,17 +49,28 @@
     </style>
   </head>
 
-  <body>
+  <body onbeforeunload="return refreshing()">
+
+    <script>
+    function refreshing() {
+      localStorage.setItem("milliseconds", ms);
+      localStorage.setItem("seconds", sec);
+      localStorage.setItem("minutes", min);
+      localStorage.setItem("hours", hr);
+    }
+    </script>
+
+
     <input type="checkbox" id="active1">
     <label for="active1" class="menu-btn"><span></span></label>
     <label for="active1" class="close"></label>
     <div class="wrapper3">
       <ul>
-        <li><a id="lightID" class="light">Nature</a></li>
-        <li><a id="charcoalID" class="charcoal">Cave</a></li>
-        <li><a id="scarletID" class="scarlet">Scarlet</a></li>
-        <li><a id="azureID" class="azure">Water</a></li>
-        <li><a id="obsidianID" class="obsidian">Deep</a></li>
+        <li><a id="lightID" class="light"><i class="uil uil-trees"></i>  Nature</a></li>
+        <li><a id="charcoalID" class="charcoal"><i class="uil uil-mountains"></i>  Cave</a></li>
+        <li><a id="scarletID" class="scarlet"><i class="uil uil-spade"></i>  Scarlet</a></li>
+        <li><a id="azureID" class="azure"><i class="uil uil-raindrops-alt"></i>  Water</a></li>
+        <li><a id="obsidianID" class="obsidian"><i class="uil uil-cloud-moon"></i>  Deep</a></li>
       </ul>
     </div>
 
@@ -118,34 +132,49 @@
 
 
 
-    <div class="clock_clock">
-      <div class="clock_hours">
-        <div class="clock_first">
-          <div class="clock_number">0</div>
-        </div>
-        <div class="clock_second">
-          <div class="clock_number">0</div>
-        </div>
-      </div>
-      <div class="clock_tick">:</div>
-      <div class="clock_minutes">
-        <div class="clock_first">
-          <div class="clock_number">0</div>
-        </div>
-        <div class="clock_second">
-          <div class="clock_number">0</div>
-        </div>
-      </div>
-      <div class="clock_tick">:</div>
-      <div class="clock_seconds">
-        <div class="clock_first">
-          <div class="clock_number">0</div>
-        </div>
-        <div class="clock_second infinite">
-          <div class="clock_number">0</div>
-        </div>
-      </div>
-    </div>
+    <div id="clock_clock" class="clock_clock">8:10:45</div>
+    <script>// Calling showTime function at every second
+      setInterval(showTime, 1000);
+
+      // Defining showTime funcion
+      function showTime() {
+          // Getting current time and date
+          let time = new Date();
+          let hour = time.getHours();
+          let min = time.getMinutes();
+          let sec = time.getSeconds();
+          am_pm = "";
+
+          // Setting time for 12 Hrs format
+          if (hour >= 12) {
+              if (hour > 12) hour -= 12;
+              am_pm = "";
+          } else if (hour == 0) {
+              hr = 12;
+              am_pm = "";
+          }
+
+          hour =
+              hour < 10 ? "0" + hour : hour;
+          min = min < 10 ? "0" + min : min;
+          sec = sec < 10 ? "0" + sec : sec;
+
+          let currentTime =
+              hour +
+              ":" +
+              min +
+              ":" +
+              sec +
+              am_pm;
+
+          // Displaying the time
+          document.getElementById(
+              "clock_clock"
+          ).innerHTML = currentTime;
+      }
+
+      showTime();
+    </script>
 
 
 
@@ -171,9 +200,9 @@
       <span class="millisecond" id="millisecondID">00</span>
     </div>
     <div class="buttons">
-      <button class="start">></button>
-      <button class="stop">ll</button>
-      <button class="reset">O</button>
+      <button class="start"><i class="uil uil-play"></i></button>
+      <button class="stop">||</i></button>
+      <button class="reset"><i class="uil uil-redo"></i></button>
     </div>
       
       <script>
@@ -273,11 +302,12 @@
         </div>
         <div class="controls">
           <div class="filters">
-            <span class="active" id="all">All  Tasks</span>
-            <span id="pending">Pending</span>
-            <span id="completed">Completed</span>
+            <span class="active" id="all"><i class="uil uil-clipboard-blank"></i> All  Tasks</span>
+            <span id="pending"><i class="uil uil-clock"></i> Pending</span>
+            <span id="completed"><i class="uil uil-check"></i> Completed</span>
           </div>
-          <button class="clear-btn">Clear All</button>
+          <button class="clear-btn">
+            <i class="uil uil-trash"></i> Clear All</button>
           
         </div>
         <ul class="task-box"></ul>
