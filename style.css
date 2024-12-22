@@ -68,7 +68,7 @@ body{
   font-family: 'Poppins', sans-serif;
   width: 100%;
   height: 100vh;
-  background: var(--background);
+  background: black;
   overflow: hidden;
 }
 .main{
@@ -1220,11 +1220,12 @@ body.show-emoji-picker em-emoji-picker {
   padding: 5px;
   color: var(--highlights);
   display: flex;
+  user-select: none;
   z-index: 2000;
   border-radius: 20px;
   background-color: var(--task-menu);
   margin-bottom: 20px;
-  transition: all 800ms cubic-bezier(.47,1.64,.41,1);
+  transition: all 600ms cubic-bezier(.47,-1.14,.41,1);
   left: -1500px;
 }
 .cal_container.open{
@@ -1243,6 +1244,7 @@ body.show-emoji-picker em-emoji-picker {
   position: relative;
   width: 100%;
   height: 650px;
+  user-select: none;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -1280,6 +1282,7 @@ body.show-emoji-picker em-emoji-picker {
   padding: 0 50px;
   font-size: 1.2rem;
   font-weight: 500;
+  user-select: none;
   text-transform: capitalize;
 }
 .calendar .month .prev,
@@ -1295,6 +1298,7 @@ body.show-emoji-picker em-emoji-picker {
   width: 100%;
   transition: all 800ms cubic-bezier(.47,1.64,.41,1.2);
   height: 5px;
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1306,6 +1310,7 @@ body.show-emoji-picker em-emoji-picker {
 .weekdays div {
   width: 14.28%;
   height: 100%;
+  user-select: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1319,6 +1324,7 @@ body.show-emoji-picker em-emoji-picker {
   padding: 0 10px;
   font-size: 1.2rem;
   font-weight: 500;
+  user-select: none;
   margin-bottom: 5px;
 }
 .calendar .days .day {
@@ -1328,6 +1334,7 @@ body.show-emoji-picker em-emoji-picker {
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
   cursor: pointer;
   color: var(--highlights);
   border: 1px solid var(--task-menu);
@@ -1381,6 +1388,7 @@ body.show-emoji-picker em-emoji-picker {
   transition: all 400ms cubic-bezier(.47,1.64,.41,1.2);
   content: "";
   position: absolute;
+  user-select: none;
   bottom: 10%;
   left: 50%;
   width: 35%;
@@ -1401,12 +1409,14 @@ body.show-emoji-picker em-emoji-picker {
 .calendar .days .active.event {
   transition: all 400ms cubic-bezier(.47,1.64,.41,1.2);
   padding-bottom: 10px;
+  user-select: none;
 }
 .calendar .goto-today {
   width: 100%;
   transition: all 400ms cubic-bezier(.47,1.64,.41,1.2);
   height: 50px;
   display: flex;
+  user-select: none;
   align-items: center;
   justify-content: space-between;
   gap: 5px;
@@ -1420,11 +1430,13 @@ body.show-emoji-picker em-emoji-picker {
   color: var(--text);
   align-items: center;
   border-radius: 5px;
+  user-select: none;
   overflow: hidden;
   border: 1px solid var(--text);
 }
 .calendar .goto-today .goto input {
   width: 100%;
+  user-select: none;
   height: 30px;
   outline: none;
   border: none;
@@ -1439,6 +1451,7 @@ body.show-emoji-picker em-emoji-picker {
   padding: 5px 10px;
   border: 1px solid var(--highlights);
   border-radius: 5px;
+  user-select: none;
   background-color: transparent;
   cursor: pointer;
   color: var(--text);
@@ -1447,15 +1460,18 @@ body.show-emoji-picker em-emoji-picker {
 .calendar .goto-today button:hover {
   color: #fff;
   background-color: var(--task-menu);
+  user-select: none;
 }
 .calendar .goto-today .goto button {
   transition: all 400ms cubic-bezier(.47,1.64,.41,1.2);
   border: none;
   border-left: 1px solid var(--highlights);
+  user-select: none;
   border-radius: 0;
 }
 .cal_container .right {
   position: relative;
+  user-select: none;
   width: 40%;
   min-height: 100%;
   padding: 20px 0;
@@ -1468,6 +1484,7 @@ body.show-emoji-picker em-emoji-picker {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  user-select: none;
   align-items: center;
   justify-content: space-between;
   padding: 0 40px;
@@ -1478,11 +1495,13 @@ body.show-emoji-picker em-emoji-picker {
 }
 .right .today-date .event-day {
   font-size: 2rem;
+  user-select: none;
   transition: all 400ms cubic-bezier(.47,1.64,.41,1.2);
   font-weight: 500;
 }
 .right .today-date .event-date {
   font-size: 1rem;
+  user-select: none;
   transition: all 400ms cubic-bezier(.47,1.64,.41,1.2);
   font-weight: 400;
   color: var(--text);
@@ -1494,6 +1513,7 @@ body.show-emoji-picker em-emoji-picker {
   max-height: 600px;
   overflow-x: hidden;
   overflow-y: auto;
+  user-select: none;
   display: flex;
   flex-direction: column;
   padding-left: 4px;
@@ -1501,6 +1521,7 @@ body.show-emoji-picker em-emoji-picker {
 .events .event {
   transition: all 400ms cubic-bezier(.47,1.64,.41,1.2);
   position: relative;
+  user-select: none;
   width: 95%;
   min-height: 70px;
   display: flex;
@@ -1523,12 +1544,14 @@ body.show-emoji-picker em-emoji-picker {
 }
 .events .event .title {
   display: flex;
+  user-select: none;
   align-items: center;
   pointer-events: none;
 }
 .events .event .title .event-title {
   font-size: 1rem;
   font-weight: 400;
+  user-select: none;
   margin-left: 20px;
 }
 .events .event span {
@@ -1544,6 +1567,7 @@ body.show-emoji-picker em-emoji-picker {
   color: var(--text);
   margin-left: 15px;
   pointer-events: none;
+  user-select: none;
 }
 .events .event:hover .event-time {
   /*color: var(--background);*/
@@ -1557,6 +1581,7 @@ body.show-emoji-picker em-emoji-picker {
   font-size: 3rem;
   line-height: 1;
   display: none;
+  user-select: none;
   align-items: center;
   justify-content: center;
   opacity: 1;
@@ -1572,6 +1597,7 @@ body.show-emoji-picker em-emoji-picker {
   bottom: 30px;
   right: 30px;
   width: 40px;
+  user-select: none;
   height: 40px;
   display: flex;
   align-items: center;
@@ -1596,6 +1622,7 @@ body.show-emoji-picker em-emoji-picker {
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
   font-size: 1.5rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.1);
@@ -1608,6 +1635,7 @@ body.show-emoji-picker em-emoji-picker {
   width: 90%;
   max-height: 0;
   overflow: hidden;
+  user-select: none;
   border-radius: 15px;
   background-color: var(--background);
   transform: translateX(-50%);
@@ -1620,6 +1648,7 @@ body.show-emoji-picker em-emoji-picker {
   width: 100%;
   height: 50px;
   display: flex;
+  user-select: none;
   align-items: center;
   justify-content: space-between;
   padding: 0 30px;
@@ -1628,6 +1657,7 @@ body.show-emoji-picker em-emoji-picker {
 }
 .add-event-header .close {
   font-size: 1.5rem;
+  user-select: none;
   cursor: pointer;
 }
 .add-event-header .close:hover {
@@ -1635,12 +1665,14 @@ body.show-emoji-picker em-emoji-picker {
 }
 .add-event-header .title {
   font-size: 1rem;
+  user-select: none;
   font-weight: normal;
 }
 .add-event-body {
   width: 100%;
   height: 100%;
   display: flex;
+  user-select: none;
   flex-direction: column;
   gap: 5px;
   padding: 20px;
@@ -1679,9 +1711,11 @@ body.show-emoji-picker em-emoji-picker {
   align-items: center;
   justify-content: center;
   padding: 20px;
+  user-select: none;
 }
 .add-event-footer .add-event-btn {
   height: 40px;
+  user-select: none;
   font-size: 1rem;
   font-weight: normal;
   outline: none;
@@ -1786,6 +1820,7 @@ body.show-emoji-picker em-emoji-picker {
 }
 
 .toggle_cal span{
+  user-select: none;
   z-index: 2001;
   font-size: 27px;
   transition: all 800ms cubic-bezier(.47,1.64,.41,0.8);
@@ -1798,12 +1833,13 @@ body.show-emoji-picker em-emoji-picker {
 
 #close_cal{
   user-select: none;
+  user-select: none;
   cursor: pointer;
   position: absolute;
   z-index: 2002;
   border-radius: 17px;
   top: 160px;
-  left: -125px;
+  left: -1025px;
   display: flex;
   /*right: 30hv;*/
   /*box-shadow: 0px 0px 20px rgba(0,0,0,0.7);*/
@@ -1813,20 +1849,22 @@ body.show-emoji-picker em-emoji-picker {
   height: 70px;
   width: 90px;
   background: var(--task-menu);
-  transition: all 600ms cubic-bezier(.47,1.64,.41,0.8);
+  transition: all 700ms cubic-bezier(.47,0,.41,1);
 }
 #close_cal.close{
+  user-select: none;
   left: 25px;
   z-index: 2002;
 }
 #close_cal span{
+  user-select: none;
   padding-bottom: 10px;
   padding-left: px;
   padding-top: 10px;
   padding-right: 40px;
   z-index: 2003;
   font-size: 37px;
-  transition: all 800ms cubic-bezier(.47,1.64,.41,0.8);
+  transition: all 2000ms cubic-bezier(.47,1.64,.41,0.8);
 }
 #close_cal span:hover{
   color: red;

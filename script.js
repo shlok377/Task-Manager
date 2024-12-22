@@ -519,6 +519,11 @@ const fileCancelButton = fileUploadWrapper.querySelector("#file-cancel");
 const chatbotToggler = document.querySelector("#chatbot-toggler");
 const closeChatbot = document.querySelector("#close-chatbot");
 
+/*require('dotenv').config()*/
+//const API_KEY = "";
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyCDEaIXN240d6WLrLDjdJd2xc95zqng-Ss`;//${API_KEY}
+/*SOME_KEY=*/
+// Initialize user message and file data
 const userData = {
   message: null,
   file: {

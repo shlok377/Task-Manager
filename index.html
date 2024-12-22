@@ -29,13 +29,15 @@
         z-index: -10;
         position: absolute;  /* Position absolutely within the container */
         width: 200vw;
-        height: 200vw;
-        background-color: rgb(255, 255, 255, 0.2);
+        height: 0vw;
+        background-color: rgb(255, 255, 255, 0.1);
         transition:  all 3s ease;
-        transform: scale(0);  /* Start with scale 0 */
-        transform-origin: top right;  /* Ensures scaling starts from the top-left corner */
+        /*transform: scale(0);  /* Start with scale 0 */
+        transform-origin: 0px 50px;  /* Ensures scaling starts from the top-left corner */
         top: -20px;
-        left: 0;
+        /*border-radius: 50%;*/
+        /*left: -20%;*/
+        
       }
 
       /* Colors for each theme */
@@ -47,7 +49,11 @@
 
       /* Active scaling for the selected div */
       .scale-div.active {
-        transform: scale(1.5);  /* Scale the selected div up */
+        /*transform: scale(1);  /* Scale the selected div up */
+        /*border-radius: 0px;*/
+        /*transition-delay: border-radius 10s;*/
+        width: 200vw;
+        height: 200vw;
       }
 
     </style>
