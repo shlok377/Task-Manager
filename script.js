@@ -1,3 +1,192 @@
+const kbn_open = document.getElementById("kbn_open"),
+  kbn_close = document.getElementById("kbn_close"),
+  main = document.getElementById("main"),
+  kbn_board = document.getElementById('kbn_board');
+
+function kbn_open_func() {
+    kbn_open.classList.toggle("active");
+    kbn_close.classList.toggle("active");
+    kbn_board.classList.toggle("active");
+    main.classList.toggle("active");
+}
+function kbn_close_func(){
+    kbn_open.classList.toggle("active");
+    kbn_close.classList.toggle("active");
+    kbn_board.classList.toggle("active");
+    main.classList.toggle("active");
+}
+kbn_open.addEventListener("click", kbn_open_func);
+kbn_close.addEventListener("click", kbn_close_func);
+
+
+let draggedCard = null;
+let rightClickedCard = null;
+const contextMenu = document.getElementById('kbn_context-menu');
+
+document.addEventListener('DOMContentLoaded', loadTasksFromLocalStorage);
+
+function addTask(columnId) {
+
+  const input = document.getElementById(`${columnId}-input`);
+  const taskText = input.value.trim();
+  if (taskText ==='') return;
+
+  const taskElement = createTaskElement(taskText);
+  document.getElementById(`${columnId}-tasks`).appendChild(taskElement);
+
+  saveTaskToLocalStorage(columnId, taskText);
+
+  input.value='';
+}
+
+function createTaskElement(text) {
+  const taskElement = document.createElement('div');
+  taskElement.classList.add('kbn_cards');
+  taskElement.textContent = text;
+  taskElement.draggable= true;
+  taskElement.addEventListener('dragstart', dragStart);
+  taskElement.addEventListener('dragend', dragEnd);
+
+  taskElement.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    rightClickedCard = this;
+    showContextMenu(e.pageX, e.pageY);
+  });
+
+  return taskElement;
+}
+
+const columns = document.querySelectorAll('.kbn_column .tasks')
+columns.forEach(column => {
+  column.addEventListener('dragover', dragOver);
+  column.addEventListener('drop', drop);
+  column.addEventListener('dragenter', dragEnter);
+  column.addEventListener('dragleave', dragLeave);
+
+});
+
+
+function dragStart() {
+  draggedCard = this;
+  setTimeout(() => this.classList.add('dragging'),0);
+}
+
+function dragEnd(){
+  setTimeout(() => {
+    this.classList.remove('dragging');
+    draggedCard = null;
+    updateLocalStorage();
+  },0);
+}
+
+function dragOver(e){
+  e.preventDefault();
+  const afterElement = getDragAfterElement(this, e.clientY);
+  if (afterElement == null){
+    this.appendChild(draggedCard); 
+  } else{
+      this.insertBefore(draggedCard, afterElement);   
+  }
+}
+
+
+function drop(){
+  this.style.backgroundColor = 'transparent';
+}
+
+function dragEnter(e) {
+  e.preventDefault();
+  this.style.backgroundColor = 'transparent';
+}
+
+function dragLeave(){
+  this.style.backgroundColor = 'transparent';
+}
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.kbn_cards:not(.dragging)')];
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    }
+    else{
+      return closest;
+    }
+  }, {offset: Number.NEGATIVE_INFINITY}).element;
+}
+
+function saveTaskToLocalStorage(columnId, taskText) {
+  const tasks = JSON.parse(localStorage.getItem(columnId)) || [];
+  tasks.push(taskText);
+  localStorage.setItem(columnId, JSON.stringify(tasks));
+}
+
+
+function loadTasksFromLocalStorage() {
+  ['kbn_todo', 'kbn_in-progress', 'kbn_done'].forEach(columnId => {
+    const tasks = JSON.parse(localStorage.getItem(columnId)) || [];
+    tasks.forEach(taskText => {
+      const taskElement = createTaskElement (taskText);
+      document.getElementById(`${columnId}-tasks`).appendChild(taskElement);
+    });
+  });
+}
+
+function updateLocalStorage() {
+  ['kbn_todo', 'kbn_in-progress', 'kbn_done'].forEach(columnId =>{
+    const tasks = [];
+    document.querySelectorAll(`#${columnId}-tasks .kbn_cards`).forEach(card=>{
+      tasks.push(card.textContent);
+    }); 
+
+    localStorage.setItem(columnId, JSON.stringify(tasks));
+  });
+}
+
+
+
+function showContextMenu(x, y) {
+  contextMenu.style.left = `${x}px`;
+  contextMenu.style.top = `${y}px`;
+  contextMenu.style.display = `block`;
+}
+
+document.addEventListener('click',function () {
+  contextMenu.style.display='none';
+});
+
+function kbn_editTask() {
+  if (rightClickedCard){
+    const newTaskText = prompt("Edit Task: ", rightClickedCard.textContent);
+    if (newTaskText !== null && newTaskText.trim() !==''){
+      rightClickedCard.textContent = newTaskText;
+      updateLocalStorage();
+    }
+  }
+}
+
+
+function kbn_deleteTask() {
+  if (rightClickedCard){
+    rightClickedCard.remove();
+    updateLocalStorage();
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const toggle_cal = document.getElementById("toggle_cal"),
   open_cal = document.getElementById("open_cal"),
   cal_container = document.getElementById("cal_container"),
@@ -15,6 +204,7 @@ const calendar = document.querySelector(".calendar"),
   eventDay = document.querySelector(".event-day"),
   eventDate = document.querySelector(".event-date"),
   eventsContainer = document.querySelector(".events"),
+  events_event = document.querySelector(".event"),
   addEventBtn = document.querySelector(".add-event"),
   addEventWrapper = document.querySelector(".add-event-wrapper "),
   addEventCloseBtn = document.querySelector(".close "),
@@ -442,7 +632,7 @@ addEventSubmit.addEventListener("click", () => {
 //function to delete event when clicked on event
 eventsContainer.addEventListener("click", (e) => {
   if (e.target.classList.contains("event")) {
-    if (confirm("Are you sure you want to delete this event?")) {
+    if (confirm("OK to remove from list and Cancel to Copy task")) {
       const eventTitle = e.target.children[0].children[1].innerHTML;
       eventsArr.forEach((event) => {
         if (
@@ -467,6 +657,10 @@ eventsContainer.addEventListener("click", (e) => {
         }
       });
       updateEvents(activeDay);
+    }
+    else{
+      console.log(e.target.children[0].children[1].innerHTML);
+      navigator.clipboard.writeText(e.target.children[0].children[1].innerHTML);
     }
   }
 });
@@ -497,205 +691,6 @@ function convertTime(time) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-const chatBody = document.querySelector(".chat-body");
-const messageInput = document.querySelector(".message-input");
-const sendMessage = document.querySelector("#send-message");
-const fileInput = document.querySelector("#file-input");
-const fileUploadWrapper = document.querySelector(".file-upload-wrapper");
-const fileCancelButton = fileUploadWrapper.querySelector("#file-cancel");
-const chatbotToggler = document.querySelector("#chatbot-toggler");
-const closeChatbot = document.querySelector("#close-chatbot");
-
-/*require('dotenv').config()*/
-//const API_KEY = "";
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=API_KEY_HERE`;//${API_KEY}
-/*SOME_KEY=*/
-// Initialize user message and file data
-const userData = {
-  message: null,
-  file: {
-    data: null,
-    mime_type: null,
-  },
-};
-
-// Store chat history
-const chatHistory = [];
-const initialInputHeight = messageInput.scrollHeight;
-
-// Create message element with dynamic classes and return it
-const createMessageElement = (content, ...classes) => {
-  const div = document.createElement("div");
-  div.classList.add("message", ...classes);
-  div.innerHTML = content;
-  return div;
-};
-
-// Generate bot response using API
-const generateBotResponse = async (incomingMessageDiv) => {
-  const messageElement = incomingMessageDiv.querySelector(".message-text");
-
-  // Add user message to chat history
-  chatHistory.push({
-    role: "user",
-    parts: [{ text: userData.message }, ...(userData.file.data ? [{ inline_data: userData.file }] : [])],
-  });
-
-  // API request options
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      contents: chatHistory,
-    }),
-  };
-
-  try {
-    // Fetch bot response from API
-    const response = await fetch(API_URL, requestOptions);
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.error.message);
-
-    // Extract and display bot's response text
-    const apiResponseText = data.candidates[0].content.parts[0].text.replace(/\*\*(.*?)\*\*/g, "$1").trim();
-    messageElement.innerText = apiResponseText;
-
-    // Add bot response to chat history
-    chatHistory.push({
-      role: "model",
-      parts: [{ text: apiResponseText }],
-    });
-  } catch (error) {
-    // Handle error in API response
-    console.log(error);
-    messageElement.innerText = error.message;
-    messageElement.style.color = "#ff0000";
-  } finally {
-    // Reset user's file data, removing thinking indicator and scroll chat to bottom
-    userData.file = {};
-    incomingMessageDiv.classList.remove("thinking");
-    chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
-  }
-};
-
-// Handle outgoing user messages
-const handleOutgoingMessage = (e) => {
-  e.preventDefault();
-  userData.message = messageInput.value.trim();
-  messageInput.value = "";
-  messageInput.dispatchEvent(new Event("input"));
-  fileUploadWrapper.classList.remove("file-uploaded");
-
-  // Create and display user message
-  const messageContent = `<div class="message-text"></div>
-                          ${userData.file.data ? `<img src="data:${userData.file.mime_type};base64,${userData.file.data}" class="attachment" />` : ""}`;
-
-  const outgoingMessageDiv = createMessageElement(messageContent, "user-message");
-  outgoingMessageDiv.querySelector(".message-text").innerText = userData.message;
-  chatBody.appendChild(outgoingMessageDiv);
-  chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
-
-  // Simulate bot response with thinking indicator after a delay
-  setTimeout(() => {
-    const messageContent = `<svg class="bot-avatar" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 1024 1024">
-            <path
-              d="M738.3 287.6H285.7c-59 0-106.8 47.8-106.8 106.8v303.1c0 59 47.8 106.8 106.8 106.8h81.5v111.1c0 .7.8 1.1 1.4.7l166.9-110.6 41.8-.8h117.4l43.6-.4c59 0 106.8-47.8 106.8-106.8V394.5c0-59-47.8-106.9-106.8-106.9zM351.7 448.2c0-29.5 23.9-53.5 53.5-53.5s53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5-53.5-23.9-53.5-53.5zm157.9 267.1c-67.8 0-123.8-47.5-132.3-109h264.6c-8.6 61.5-64.5 109-132.3 109zm110-213.7c-29.5 0-53.5-23.9-53.5-53.5s23.9-53.5 53.5-53.5 53.5 23.9 53.5 53.5-23.9 53.5-53.5 53.5zM867.2 644.5V453.1h26.5c19.4 0 35.1 15.7 35.1 35.1v121.1c0 19.4-15.7 35.1-35.1 35.1h-26.5zM95.2 609.4V488.2c0-19.4 15.7-35.1 35.1-35.1h26.5v191.3h-26.5c-19.4 0-35.1-15.7-35.1-35.1zM561.5 149.6c0 23.4-15.6 43.3-36.9 49.7v44.9h-30v-44.9c-21.4-6.5-36.9-26.3-36.9-49.7 0-28.6 23.3-51.9 51.9-51.9s51.9 23.3 51.9 51.9z"/></svg>
-          <div class="message-text">
-            <div class="thinking-indicator">
-              <div class="dot"></div>
-              <div class="dot"></div>
-              <div class="dot"></div>
-            </div>
-          </div>`;
-
-    const incomingMessageDiv = createMessageElement(messageContent, "bot-message", "thinking");
-    chatBody.appendChild(incomingMessageDiv);
-    chatBody.scrollTo({ top: chatBody.scrollHeight, behavior: "smooth" });
-    generateBotResponse(incomingMessageDiv);
-  }, 600);
-};
-
-// Adjust input field height dynamically
-messageInput.addEventListener("input", () => {
-  messageInput.style.height = `${initialInputHeight}px`;
-  messageInput.style.height = `${messageInput.scrollHeight}px`;
-  document.querySelector(".chat-form").style.borderRadius = messageInput.scrollHeight > initialInputHeight ? "15px" : "32px";
-});
-
-// Handle Enter key press for sending messages
-messageInput.addEventListener("keydown", (e) => {
-  const userMessage = e.target.value.trim();
-  if (e.key === "Enter" && !e.shiftKey && userMessage && window.innerWidth > 768) {
-    handleOutgoingMessage(e);
-  }
-});
-
-// Handle file input change and preview the selected file
-fileInput.addEventListener("change", () => {
-  const file = fileInput.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    fileInput.value = "";
-    fileUploadWrapper.querySelector("img").src = e.target.result;
-    fileUploadWrapper.classList.add("file-uploaded");
-    const base64String = e.target.result.split(",")[1];
-
-    // Store file data in userData
-    userData.file = {
-      data: base64String,
-      mime_type: file.type,
-    };
-  };
-
-  reader.readAsDataURL(file);
-});
-
-// Cancel file upload
-fileCancelButton.addEventListener("click", () => {
-  userData.file = {};
-  fileUploadWrapper.classList.remove("file-uploaded");
-});
-
-// Initialize emoji picker and handle emoji selection
-const picker = new EmojiMart.Picker({
-  theme: "light",
-  skinTonePosition: "none",
-  previewPosition: "none",
-  onEmojiSelect: (emoji) => {
-    const { selectionStart: start, selectionEnd: end } = messageInput;
-    messageInput.setRangeText(emoji.native, start, end, "end");
-    messageInput.focus();
-  },
-  onClickOutside: (e) => {
-    if (e.target.id === "emoji-picker") {
-      document.body.classList.toggle("show-emoji-picker");
-    } else {
-      document.body.classList.remove("show-emoji-picker");
-    }
-  },
-});
-
-document.querySelector(".chat-form").appendChild(picker);
-
-sendMessage.addEventListener("click", (e) => handleOutgoingMessage(e));
-document.querySelector("#file-upload").addEventListener("click", () => fileInput.click());
-closeChatbot.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
 
 
 
