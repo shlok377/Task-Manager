@@ -1638,7 +1638,6 @@ body{
   /*background: var(--background);*/
   /*outline: 2px solid var(--task-menu);*/
   z-index: 1120;
-  padding: 30px;
   width: 450px;
   box-shadow: 0px 5px rgba(255, 255, 255, 0.1);
 }
@@ -1672,14 +1671,16 @@ body{
 
 .kbn_cards:hover{
   background-color: var(--background);
-  transform: scale(1.10);
+  transform: scale(1.05);
   padding-left: 15px;
   border-radius: 13px;
   /*margin-bottom: 20px;*/
 }
 
 .kbn_cards.dragging{
-  opacity: 0.5;
+  background-color: var(--task-menu);
+  opacity: 0.4;
+  transition: all 400ms cubic-bezier(.47,1.64,.41,1.2);
 }
 
 .kbn_task-input{
@@ -1714,8 +1715,8 @@ body{
 }
 
 .kbn_add-task{
-  margin-left: 85px;
-  margin-right: 85px;
+  margin-left: 95px;
+  margin-right: 95px;
   margin-top: 20px;
   text-align: center;
   font-size: 15px;
@@ -1743,8 +1744,9 @@ body{
 
 .kbn_context-menu{
   display: none;
+  transition: all 500ms cubic-bezier(.47,1.64,.41,1);
   position: absolute;
-  background: var(--text);
+  background: var(--task-menu);
   border-radius: 20px;
   z-index: 1100;
   padding: 10px 0;
@@ -1753,15 +1755,19 @@ body{
 .kbn_context-menu ul{
   list-style: none;
   margin: 0;
+  transition: all 500ms cubic-bezier(.47,1.64,.41,1);
   padding: 0;  
 }
 
 .kbn_context-menu ul li{
   padding: 8px 20px;
   cursor: pointer;
-  color: purple;
+  transition: all 500ms cubic-bezier(.47,1.64,.41,1);
+  border-radius: 15px;
+  color: var(--highlights);
 }
 
 .kbn_context-menu ul li:hover{
   background: var(--tm-hover);
+  color: var(--text);
 }
